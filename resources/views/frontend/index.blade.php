@@ -35,7 +35,7 @@
 								</article>
 								<!-- End Single Post -->
 							@empty
-								<div class="text-cente">No Posts Found</div>
+								<div class="text-center">No Posts Found</div>
 							@endforelse
         					
 						</div>

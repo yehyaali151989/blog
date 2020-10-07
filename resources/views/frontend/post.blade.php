@@ -5,8 +5,10 @@
 <div class="page-blog-details section-padding--lg bg--white">
 	<div class="container">
 		<div class="row">
+			
 			<div class="col-lg-9 col-12">
 				<div class="blog-details content">
+
 					<article class="blog-post-details">
 
 						@if ($post->media->count() > 0)
@@ -15,16 +17,16 @@
 
 									@foreach ($post->media as $media)
 
-										<li data-target="#carouselIndicators" data-slide-to="{{ $loop->index }}" class="{{ $loop->index == 0 ? 'Active' : ''}}"></li>
+										<li data-target="#carouselIndicators" data-slide-to="{{ $loop->index }}" class="{{ $loop->index == 0 ? 'active' : ''}}"></li>
 
 									@endforeach
 
 								</ol>
 								<div class="carousel-inner">
 
-									@forelse($post->media as $media)
+									@foreach($post->media as $media)
 
-										<div class="carousel-item {{ $loop->index == 0 ? 'Active' : ''}}">
+										<div class="carousel-item {{ $loop->index == 0 ? 'active' : ''}}">
 											<img src="{{ asset('assets/posts/' . $media->file_name) }}" class="d-block w-100" alt="{{ $post->title }}">
 										</div>
 
@@ -57,17 +59,22 @@
 							<div class="post_content">
 								<p>
 									{!! $post->description !!}
+									
 								</p>
 							</div>
 							<ul class="blog_meta">
-								<li><a href="#">{{ $post->approved_comments->count() }} comment(s)</a></li>
-								<li> / </li>
-								<li>Category:<span>{{ $post->category->name }}</span></li>
+								{{-- <li><a href="#">{{ $post->approved_comments->count() }} comment(s)</a></li> --}}
+								{{-- <li> / </li> --}}
+								<li>Category: <span style="color:red">{{ $post->category->name }}</span></li>
 							</ul>
 						</div>
 					</article>
+
+
 					<div class="comments_area">
+
 						<h3 class="comment__title">{{ $post->approved_comments->count() }} comment(s)</h3>
+
 						<ul class="comment__list">
 
 							@forelse ($post->approved_comments as $comment)
@@ -91,33 +98,52 @@
 							
 							
 						</ul>
+
 					</div>
+
+
 					<div class="comment_respond">
 						<h3 class="reply_title">Leave a Comment</h3>
+
 						<form class="comment__form" action="{{ route('post.add.comment', $post->slug) }}" method="POST">
 							@csrf
 							<p>Your email address will not be published.Required fields are marked </p>
 							<div class="input__box">
 								<textarea name="comment" placeholder="Your comment here">{{ old('comment') }}</textarea>
+								<span class="text-danger">
+									@error('comment')
+									{{ $message }}
+								@enderror
+								</span>
 							</div>
-							@error('comment')
-								{{ $message }}
-							@enderror
+							
 							<div class="input__wrapper clearfix">
 								<div class="input__box name one--third">
 									<input type="text" placeholder="name" name="name" {{ old('name') }}>
+									<span class="text-danger">
+										@error('name')
+										{{ $message }}
+										@enderror
+									</span>
 								</div>
-								@error('name')
-								{{ $message }}
-								@enderror
+								
+								
 								<div class="input__box email one--third">
 									<input type="email" placeholder="email" name="email" {{ old('email') }}>
+									<span class="text-danger">
+										@error('email')
+										{{ $message }}
+										@enderror
+									</span>
 								</div>
-								@error('email')
-								{{ $message }}
-								@enderror
+								
 								<div class="input__box website one--third">
 									<input type="text" placeholder="website" name="url" {{ old('url') }}>
+									<span class="text-danger">
+										@error('url')
+										{{ $message }}
+										@enderror
+									</span>
 								</div>
 							</div>
 							<div class="submite__btn">
@@ -125,6 +151,8 @@
 							</div>
 						</form>
 					</div>
+
+
 				</div>
 			</div>
 
@@ -297,6 +325,8 @@
 					<!-- End Single Widget -->
 				</div>
 			</div>
+
+
 		</div>
 	</div>
 </div>
