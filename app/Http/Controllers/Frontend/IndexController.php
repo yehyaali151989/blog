@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Models\Post;
+use App\Models\User;
 use App\Models\Comment;
 use App\Models\Contact;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
@@ -150,5 +152,57 @@ class IndexController extends Controller
         $posts = $posts->post()->active()->orderBy('id', 'desc')->paginate(5);
 
         return view('frontend.index', compact('posts'));
+    }
+
+    public function category($slug)
+    {
+        $category = Category::whereSlug($slug)->orWhere('id', $slug)->whereStatus(1)->first()->id;
+
+        if ($category) {
+            $posts = Post::with(['media', 'user'])
+                ->whereCategoryId($category)
+                ->post()
+                ->active()
+                ->orderBy('id', 'desc')
+                ->paginate(5);
+
+            return view('frontend.index', compact('posts'));
+        }
+
+        return redirect()->route('frontend.index');
+    }
+
+    public function archive($date)
+    {
+        $exploded_date = explode('-', $date);
+        $month = $exploded_date[0];
+        $year = $exploded_date[1];
+
+        $posts = Post::with(['media', 'user'])
+            ->whereMonth('created_at', $month)
+            ->whereYear('created_at', $year)
+            ->post()
+            ->active()
+            ->orderBy('id', 'desc')
+            ->paginate(5);
+        return view('frontend.index', compact('posts'));
+    }
+
+    public function author($username)
+    {
+        $user = User::whereUsername($username)->whereStatus(1)->first()->id;
+
+        if ($user) {
+            $posts = Post::with(['media', 'user'])
+                ->whereUserId($user)
+                ->post()
+                ->active()
+                ->orderBy('id', 'desc')
+                ->paginate(5);
+
+            return view('frontend.index', compact('posts'));
+        }
+
+        return redirect()->route('frontend.index');
     }
 }

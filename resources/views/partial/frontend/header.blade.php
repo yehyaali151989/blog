@@ -22,9 +22,9 @@
                         <li class="drop"><a href="javascript:void(0);">Blog</a>
                             <div class="megamenu dropdown">
                                 <ul class="item item01">
-                                    <li><a href="#">un-categorized</a></li>
-                                    <li><a href="#">Natural</a></li>
-                                    <li><a href="#">Flowers</a></li>
+                                    @foreach ($global_categories as $global_categorie)
+                                        <li><a href="{{ route('frontend.category.posts', $global_categorie->slug) }}">{{ $global_categorie->name }}</a></li>
+                                    @endforeach
                                 </ul>
                             </div>
                         </li>
