@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
-use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Model;
+use Cviebrock\EloquentSluggable\Sluggable;
+use Nicolaslopezj\Searchable\SearchableTrait;
 
 class Post extends Model
 {
-    use Sluggable;
+    use Sluggable, SearchableTrait;
 
     protected $guarded = [];
 
@@ -18,6 +19,23 @@ class Post extends Model
                 'source' => 'title'
             ]
         ];
+    }
+
+    protected $searchable = [
+        'columns'   => [
+            'posts.title'       => 10,
+            'posts.description' => 10,
+        ],
+    ];
+
+    public function scopeActive($query)
+    {
+        return $query->where('status', 1);
+    }
+
+    public function scopePost($query)
+    {
+        return $query->where('post_type', 'post');
     }
 
     public function category()

@@ -37,8 +37,7 @@ Route::get('/',                                 ['as' => 'frontend.index',      
 Route::get('/contact-us',                           ['as' => 'frontend.contact',           'uses' => 'Frontend\IndexController@contact']);
 Route::post('/contact-us',                           ['as' => 'frontend.do_contact',   'uses' => 'Frontend\IndexController@do_contact']);
 
-
-// Route::get('/{page}',                           ['as' => 'page.show',           'uses' => 'Frontend\IndexController@page_show']);
+Route::get('/search',                           ['as' => 'frontend.search',                 'uses' => 'Frontend\IndexController@search']);
 
 Route::get('/{post}',                           ['as' => 'post.show',           'uses' => 'Frontend\IndexController@post_show']);
 Route::post('/{post}',                           ['as' => 'post.add.comment',   'uses' => 'Frontend\IndexController@store_comment']);
