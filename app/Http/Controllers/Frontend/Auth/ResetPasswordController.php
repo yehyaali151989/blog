@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Frontend\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\ResetsPasswords;
-use Illuminate\Support\Facades\Request;
+use Illuminate\Http\Request;
 
 class ResetPasswordController extends Controller
 {
@@ -35,4 +35,5 @@ class ResetPasswordController extends Controller
             ['token' => $token, 'email' => $request->email]
         );
     }
+
 }

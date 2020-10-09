@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Frontend\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\VerifiesEmails;
-use Illuminate\Support\Facades\Request;
+use Illuminate\Http\Request;
 
 class VerificationController extends Controller
 {
@@ -44,7 +44,19 @@ class VerificationController extends Controller
     public function show(Request $request)
     {
         return $request->user()->hasVerifiedEmail()
-                        ? redirect($this->redirectPath())
-                        : view('frontend.auth.verify');
+            ? redirect($this->redirectPath())
+            : view('frontend.auth.verify');
     }
+
+    protected function verified(Request $request)
+    {
+
+        $request->user()->update(['status' => 1]);
+
+        return redirect()->route('frontend.index')->with([
+            'message' => 'Your account is activated successfully.',
+            'alert-type' => 'success'
+        ]);
+    }
+
 }

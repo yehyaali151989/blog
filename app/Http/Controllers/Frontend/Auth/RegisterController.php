@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
@@ -43,6 +44,12 @@ class RegisterController extends Controller
         $this->middleware('guest');
     }
 
+    public function showRegistrationForm()
+    {
+        return view('frontend.auth.register');
+    }
+
+
     /**
      * Get a validator for an incoming registration request.
      *
@@ -78,7 +85,7 @@ class RegisterController extends Controller
         ]);
 
         if (isset($data['user_image'])) {
-            if ($image = $data['user_image']) {
+            if ($image = $data['user_image']){
                 $filename = Str::slug($data['username']) . '.' . $image->getClientOriginalExtension();
                 $path = public_path('/assets/users/' . $filename);
                 Image::make($image->getRealPath())->resize(300, 300, function ($constraint) {
@@ -89,10 +96,15 @@ class RegisterController extends Controller
         }
 
         return $user;
+
     }
 
-    public function showRegistrationForm()
+    protected function registered(Request $request, $user)
     {
-        return view('frontend.auth.register');
+        return redirect()->route('frontend.index')->with([
+            'message' => 'Your account registered successfully, Please check your email to activate your account.',
+            'alert-type' => 'success'
+        ]);
     }
+
 }

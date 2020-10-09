@@ -19,10 +19,13 @@ class ForgotPasswordController extends Controller
     */
 
     use SendsPasswordResetEmails;
-    
 
     public function showLinkRequestForm()
     {
-        return view('frontend.auth.passwords.email');
+        if (auth()->guest()){
+            return view('frontend.auth.passwords.email');
+        }
+        return redirect()->route('frontend.index');
+
     }
 }

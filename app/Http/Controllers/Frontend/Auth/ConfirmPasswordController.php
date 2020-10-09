@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Frontend\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\ConfirmsPasswords;
-use Illuminate\Support\Facades\Request;
+use Illuminate\Http\Request;
 
 class ConfirmPasswordController extends Controller
 {
@@ -48,4 +48,5 @@ class ConfirmPasswordController extends Controller
     {
         $request->session()->put('frontend.auth.password_confirmed_at', time());
     }
+
 }
