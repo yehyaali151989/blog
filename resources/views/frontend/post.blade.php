@@ -26,8 +26,8 @@
 
 									@foreach($post->media as $media)
 
-										<div class="carousel-item {{ $loop->index == 0 ? 'active' : ''}}">
-											<img src="{{ asset('assets/posts/' . $media->file_name) }}" class="d-block w-100" alt="{{ $post->title }}">
+										<div class="thumb carousel-item {{ $loop->index == 0 ? 'active' : ''}}">
+											<img src="{{ asset('assets/posts/' . $media->file_name) }}" class="d-block w-100" alt="{{ $post->title }}" width="870" height="455">
 										</div>
 
 									@endforeach

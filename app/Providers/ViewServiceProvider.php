@@ -45,7 +45,7 @@ class ViewServiceProvider extends ServiceProvider
                         })
                         ->wherePostType('post')->whereStatus(1)->orderBy('id', 'desc')->limit(10)->get();
 
-                    Cache::remember('recent_posts', 3600, function () use ($recent_posts) {
+                    Cache::remember('recent_posts', 60, function () use ($recent_posts) {
                         return $recent_posts;
                     });
                 }
@@ -54,7 +54,7 @@ class ViewServiceProvider extends ServiceProvider
                 if (!Cache::has('recent_comments')) {
                     $recent_comments = Comment::whereStatus(1)->orderBy('id', 'desc')->limit(5)->get();
 
-                    Cache::remember('recent_comments', 3600, function () use ($recent_comments) {
+                    Cache::remember('recent_comments', 60, function () use ($recent_comments) {
                         return $recent_comments;
                     });
                 }
@@ -63,7 +63,7 @@ class ViewServiceProvider extends ServiceProvider
                 if (!Cache::has('global_categories')) {
                     $global_categories = Category::whereStatus(1)->orderBy('id', 'desc')->get();
 
-                    Cache::remember('global_categories', 3600, function () use ($global_categories) {
+                    Cache::remember('global_categories', 60, function () use ($global_categories) {
                         return $global_categories;
                     });
                 }
@@ -74,7 +74,7 @@ class ViewServiceProvider extends ServiceProvider
                         ->select(DB::raw("Year(created_at) as year"), DB::raw("Month(created_at) as month"))
                         ->pluck('year', 'month')->toArray();
 
-                    Cache::remember('global_archives', 3600, function () use ($global_archives) {
+                    Cache::remember('global_archives', 60, function () use ($global_archives) {
                         return $global_archives;
                     });
                 }
