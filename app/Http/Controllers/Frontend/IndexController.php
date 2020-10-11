@@ -10,6 +10,7 @@ use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
+use App\Notifications\NewCommentForPostOwnerNotify;
 
 class IndexController extends Controller
 {
@@ -86,8 +87,16 @@ class IndexController extends Controller
             $data['post_id'] = $post->id;
             $data['user_id'] = $userId;
 
-            // $post->comments->create($data);
-            Comment::create($data);
+
+            $comment = Comment::create($data);
+
+            // $comment = $post->comments->create($data);
+
+            if (auth()->guest() || auth()->id() != $post->user_id) {
+                $post->user->notify(new NewCommentForPostOwnerNotify($comment));
+            }
+
+
 
             return redirect()->back()->with([
                 'message' => 'Comment added succefuly',
