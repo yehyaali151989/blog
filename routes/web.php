@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/',                                 ['as' => 'frontend.index',      'uses' => 'Frontend\IndexController@index']);
 
+
 // Authentication Routes...
 Route::get('/login',                            ['as' => 'frontend.show_login_form',        'uses' => 'Frontend\Auth\LoginController@showLoginForm']);
 Route::post('login',                            ['as' => 'frontend.login',                  'uses' => 'Frontend\Auth\LoginController@login']);
@@ -20,16 +21,17 @@ Route::post('email/resend',                     ['as' => 'verification.resend', 
 
 
 Route::group(['middleware' => 'verified'], function () {
-
     Route::get('/dashboard',                    ['as' => 'frontend.dashboard',              'uses' => 'Frontend\UsersController@index']);
 
     Route::any('user/notifications/get', 'Frontend\NotificationsController@getNotifications');
     Route::any('user/notifications/read', 'Frontend\NotificationsController@markAsRead');
     Route::any('user/notifications/read/{id}', 'Frontend\NotificationsController@markAsReadAndRedirect');
 
+
     Route::get('/edit-info',                    ['as' => 'users.edit_info',                 'uses' => 'Frontend\UsersController@edit_info']);
     Route::post('/edit-info',                   ['as' => 'users.update_info',               'uses' => 'Frontend\UsersController@update_info']);
     Route::post('/edit-password',               ['as' => 'users.update_password',           'uses' => 'Frontend\UsersController@update_password']);
+
 
     Route::get('/create-post',                  ['as' => 'users.post.create',               'uses' => 'Frontend\UsersController@create_post']);
     Route::post('/create-post',                 ['as' => 'users.post.store',                'uses' => 'Frontend\UsersController@store_post']);
@@ -49,31 +51,11 @@ Route::group(['middleware' => 'verified'], function () {
 
 
 
-
-// Route::group(['prefix' => 'admin'], function () {
-//     Route::get('/login',                            ['as' => 'backend.show_login_form',        'uses' => 'Backend\Auth\LoginController@showLoginForm']);
-//     Route::post('login',                            ['as' => 'backend.login',                  'uses' => 'Backend\Auth\LoginController@login']);
-//     Route::post('logout',                           ['as' => 'backend.logout',                 'uses' => 'Backend\Auth\LoginController@logout']);
-//     Route::get('password/reset',                    ['as' => 'backend.password.request',       'uses' => 'Backend\Auth\ForgotPasswordController@showLinkRequestForm']);
-//     Route::post('password/email',                   ['as' => 'backend.password.email',         'uses' => 'Backend\Auth\ForgotPasswordController@sendResetLinkEmail']);
-//     Route::get('password/reset/{token}',            ['as' => 'backend.password.reset',         'uses' => 'Backend\Auth\ResetPasswordController@showResetForm']);
-//     Route::post('password/reset',                   ['as' => 'backend.password.update',        'uses' => 'Backend\Auth\ResetPasswordController@reset']);
-//     Route::get('email/verify',                      ['as' => 'backend.verification.notice',    'uses' => 'Backend\Auth\VerificationController@show']);
-//     Route::get('/email/verify/{id}/{hash}',         ['as' => 'backend.verification.verify',    'uses' => 'Backend\Auth\VerificationController@verify']);
-//     Route::post('email/resend',                     ['as' => 'backend.verification.resend',    'uses' => 'Frontend\Auth\VerificationController@resend']);
-// });
-
-
-Route::get('/contact-us',                           ['as' => 'frontend.contact',           'uses' => 'Frontend\IndexController@contact']);
-Route::post('/contact-us',                           ['as' => 'frontend.do_contact',   'uses' => 'Frontend\IndexController@do_contact']);
-
+Route::get('/contact-us',                       ['as' => 'frontend.contact',                'uses' => 'Frontend\IndexController@contact']);
+Route::post('/contact-us',                      ['as' => 'frontend.do_contact',             'uses' => 'Frontend\IndexController@do_contact']);
 Route::get('/category/{category_slug}',         ['as' => 'frontend.category.posts',         'uses' => 'Frontend\IndexController@category']);
-
 Route::get('/archive/{date}',                   ['as' => 'frontend.archive.posts',          'uses' => 'Frontend\IndexController@archive']);
-
 Route::get('/author/{username}',                ['as' => 'frontend.author.posts',           'uses' => 'Frontend\IndexController@author']);
-
 Route::get('/search',                           ['as' => 'frontend.search',                 'uses' => 'Frontend\IndexController@search']);
-
-Route::get('/{post}',                           ['as' => 'post.show',           'uses' => 'Frontend\IndexController@post_show']);
-Route::post('/{post}',                           ['as' => 'post.add.comment',   'uses' => 'Frontend\IndexController@store_comment']);
+Route::get('/{post}',                           ['as' => 'posts.show',                      'uses' => 'Frontend\IndexController@post_show']);
+Route::post('/{post}',                          ['as' => 'posts.add_comment',               'uses' => 'Frontend\IndexController@store_comment']);

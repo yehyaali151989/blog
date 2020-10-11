@@ -24,7 +24,7 @@ window.axios = require('axios');
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 window.axios.defaults.headers.common['Content-Type'] = 'application/json';
 
-let token = document.head.querySelector('meta[name="csrf-token"]');
+let token = document.head.querySelector('mata[name="csrf-token"]');
 if (token) {
     window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
 } else {
@@ -45,9 +45,10 @@ window.Echo = new Echo({
     broadcaster: 'pusher',
     key: process.env.MIX_PUSHER_APP_KEY,
     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
-    forceTLS: false,
+    forceTLS: true,
     wsHost: window.location.hostname,
-    wsPort: 6001,
+    wsPort: 6006,
+    wssPort: 6006,
     disableStats: true,
     encrypted: true,
 });

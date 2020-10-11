@@ -55901,7 +55901,6 @@ window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.
  */
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
-// Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 
 Vue.component('user-notification', __webpack_require__(/*! ./components/UserNotification.vue */ "./resources/js/components/UserNotification.vue")["default"]);
 /**
@@ -55949,7 +55948,7 @@ try {
 window.axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 window.axios.defaults.headers.common['Content-Type'] = 'application/json';
-var token = document.head.querySelector('meta[name="csrf-token"]');
+var token = document.head.querySelector('mata[name="csrf-token"]');
 
 if (token) {
   window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
@@ -55969,9 +55968,10 @@ window.Echo = new laravel_echo__WEBPACK_IMPORTED_MODULE_0__["default"]({
   broadcaster: 'pusher',
   key: "blogKey",
   cluster: "eu",
-  forceTLS: false,
+  forceTLS: true,
   wsHost: window.location.hostname,
-  wsPort: 6001,
+  wsPort: 6006,
+  wssPort: 6006,
   disableStats: true,
   encrypted: true
 });

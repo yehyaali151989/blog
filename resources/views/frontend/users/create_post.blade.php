@@ -55,11 +55,10 @@
     </div>
 
     <div class="col-lg-3 col-12 md-mt-40 sm-mt-40">
-        @include('partial.frontend.users.sidebar')
-    </div>
+                    @include('partial.frontend.users.sidebar')
+                </div>
 
 @endsection
-
 @section('script')
     <script src="{{ asset('frontend/js/summernote/summernote-bs4.min.js') }}"></script>
     <script>
